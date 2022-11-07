@@ -1,3 +1,4 @@
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:coding/Views/View.dart';
 
@@ -12,6 +13,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Drivers Application',
+      theme: FlexThemeData.light(scheme: FlexScheme.green),
+      // darkTheme: FlexThemeData.dark(
+      //     scheme: FlexScheme.mallardGreen, darkIsTrueBlack: true),
+      //themeMode: ThemeMode.dark,
       home: View(),
     );
   }
