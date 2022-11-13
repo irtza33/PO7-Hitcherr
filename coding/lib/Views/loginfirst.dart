@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:coding/Controllers/Controller.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:coding/Views/Driverlogin.dart';
+import 'package:coding/Views/Userlogin.dart';
 
 class loginfirst extends StatelessWidget {
   const loginfirst({super.key});
@@ -32,8 +35,8 @@ class loginfirst extends StatelessWidget {
                             backgroundColor: Color.fromARGB(250, 255, 0, 0),
                           ),
                           onPressed: () {
-                            // Navigator.push(
-                            // context, MaterialPageRoute(builder: (_) => loginfirst() ));
+                            Navigator.push(
+                            context, MaterialPageRoute(builder: (_) => Driverlogin() ));
                           },
                         ))),
               ),
@@ -50,7 +53,10 @@ class loginfirst extends StatelessWidget {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Color.fromARGB(250, 255, 0, 0),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                context, MaterialPageRoute(builder: (_) => Userlogin() ));
+                          },
                         ))),
               ),
             ],
