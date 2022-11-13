@@ -36,7 +36,9 @@ class loginfirst extends StatelessWidget {
                           ),
                           onPressed: () {
                             Navigator.push(
-                            context, MaterialPageRoute(builder: (_) => Driverlogin() ));
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => Driverlogin()));
                           },
                         ))),
               ),
@@ -55,7 +57,9 @@ class loginfirst extends StatelessWidget {
                           ),
                           onPressed: () {
                             Navigator.push(
-                                context, MaterialPageRoute(builder: (_) => Userlogin() ));
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => UserSignin()));
                           },
                         ))),
               ),

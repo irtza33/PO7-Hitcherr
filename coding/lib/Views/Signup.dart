@@ -97,7 +97,7 @@ class _SignupState extends State<Signup> {
               child: Container(
                 padding: const EdgeInsets.only(top: 20, right: 200),
                 child: DropdownButton<String>(
-                  value: _controller.getType() ? "Customer" : "Driver",
+                  value: _controller.getType() == 1 ? "Customer" : "Driver",
                   items: <String>['Driver', 'Customer']
                       .map<DropdownMenuItem<String>>((String val) {
                     return DropdownMenuItem<String>(
@@ -111,9 +111,9 @@ class _SignupState extends State<Signup> {
                   onChanged: (String? newVal) {
                     setState(() {
                       if (newVal == "Driver") {
-                        _controller.setType(false);
+                        _controller.setType(0);
                       } else {
-                        _controller.setType(true);
+                        _controller.setType(1);
                       }
                     });
                   },
@@ -135,15 +135,18 @@ class _SignupState extends State<Signup> {
                         onPressed: () {
                           _controller.signIn().then(
                             (value) {
-                              print("New Accout Made");
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => Landing())).onError(
-                                (error, stackTrace) {
-                                  print("Error ${error.toString()}");
-                                },
-                              );
+                              if (value != null && value.user != null) {
+                                _controller.updateDB(value.user);
+                                print("New Account Made");
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => Landing())).onError(
+                                  (error, stackTrace) {
+                                    print("Error ${error.toString()}");
+                                  },
+                                );
+                              }
                             },
                           );
                         },

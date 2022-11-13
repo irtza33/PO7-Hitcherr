@@ -1,8 +1,21 @@
+import 'package:coding/Models/SignupModel.dart';
+import 'package:coding/Models/UserSigninModel.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:coding/Views/View.dart';
+import 'package:coding/Controllers/UserSigninController.dart';
+import 'package:coding/Views/Landing.dart';
 
-class Userlogin extends StatelessWidget {
-  const Userlogin({Key? key}) : super(key: key);
+class UserSignin extends StatefulWidget {
+  const UserSignin({Key? key}) : super(key: key);
+  @override
+  _UserSigninState createState() => _UserSigninState();
+}
+
+class _UserSigninState extends State<UserSignin> {
+  //const Userlogin({Key? key}) : super(key: key);
+
+  final UserSigninController _controller = UserSigninController();
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +37,7 @@ class Userlogin extends StatelessWidget {
                 child: TextField(
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(), labelText: 'Email Address'),
+                  onChanged: (value) => _controller.setEmail(value),
                 ),
               ),
             ),
@@ -34,12 +48,12 @@ class Userlogin extends StatelessWidget {
                 child: TextField(
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(), labelText: 'Password'),
+                  onChanged: (value) => _controller.setPassword(value),
                   obscureText: true,
                   obscuringCharacter: "*",
                 ),
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Container(
@@ -48,13 +62,37 @@ class Userlogin extends StatelessWidget {
                   width: 150,
                   height: 50,
                   child: ElevatedButton(
-                    child: const Text('Login as Rider'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromARGB(250, 255, 0, 0),
-                    ),
-                    onPressed: () {
-                    },
-                  ),
+                      child: const Text('Login as Rider'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color.fromARGB(250, 255, 0, 0),
+                      ),
+                      onPressed: () {
+                        _controller.signIn().then(
+                          (value) {
+                            if (value != null) {
+                              _controller.checkAuth().then((value) {
+                                if (UserSigninModel.checkState == 1) {
+                                  print("Signed in successfully");
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => Landing())).onError(
+                                    (error, stackTrace) {
+                                      print("Error ${error.toString()}");
+                                    },
+                                  );
+                                } else {
+                                  FirebaseAuth.instance.signOut();
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content: Text(
+                                              "You are not registered as a customer")));
+                                }
+                              });
+                            }
+                          },
+                        );
+                      }),
                 ),
               ),
             )

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:coding/Models/SignupModel.dart';
@@ -19,7 +20,7 @@ class SignupController extends ControllerMVC {
     return SignupModel.gpassword;
   }
 
-  bool getType() {
+  int getType() {
     return SignupModel.gtype;
   }
 
@@ -43,12 +44,26 @@ class SignupController extends ControllerMVC {
     SignupModel.sphone(toSet);
   }
 
-  void setType(bool toSet) {
+  void setType(int toSet) {
     SignupModel.stype(toSet);
   }
 
-  Future<UserCredential> signIn() {
+  Future signIn() {
     return FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: getEmail(), password: getPassword());
+  }
+
+  void updateDB(User user) async {
+    //User? user = await FirebaseAuth.instance.currentUser;
+    FirebaseFirestore.instance.collection("users").doc(user.uid).set(
+      {
+        'name': SignupModel.gname,
+        'email': SignupModel.gemail,
+        'password': SignupModel.gpassword,
+        'phone': SignupModel.gphone,
+        'cnic': SignupModel.gcnic,
+        'type': SignupModel.gtype,
+      },
+    );
   }
 }
