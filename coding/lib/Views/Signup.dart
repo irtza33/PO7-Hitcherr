@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:coding/Controllers/SignupController.dart';
+import 'package:coding/Views/View.dart';
+import 'package:coding/Views/Landing.dart';
 
 class Signup extends StatefulWidget {
   const Signup({Key? key}) : super(key: key);
@@ -8,9 +11,12 @@ class Signup extends StatefulWidget {
 
 class _SignupState extends State<Signup> {
   String dropdownVal = "Driver";
+  final SignupController _controller = SignupController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 150, 0, 0),
@@ -23,10 +29,11 @@ class _SignupState extends State<Signup> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Container(
-                padding: const EdgeInsets.only(top: 3, left: 3),
+                padding: const EdgeInsets.only(top: 50, left: 3),
                 child: TextField(
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(), labelText: 'Email Address'),
+                  onChanged: (value) => _controller.setEmail(value),
                 ),
               ),
             ),
@@ -39,6 +46,7 @@ class _SignupState extends State<Signup> {
                       border: OutlineInputBorder(), labelText: 'Password'),
                   obscureText: true,
                   obscuringCharacter: "*",
+                  onChanged: (value) => _controller.setPassword(value),
                 ),
               ),
             ),
@@ -49,6 +57,7 @@ class _SignupState extends State<Signup> {
                 child: TextField(
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(), labelText: 'Full Name'),
+                  onChanged: (value) => _controller.setName(value),
                 ),
               ),
             ),
@@ -60,6 +69,7 @@ class _SignupState extends State<Signup> {
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(), labelText: 'CNIC'),
                   keyboardType: TextInputType.number,
+                  onChanged: (value) => _controller.setCnic(value),
                 ),
               ),
             ),
@@ -71,6 +81,7 @@ class _SignupState extends State<Signup> {
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(), labelText: 'Phone Number'),
                   keyboardType: TextInputType.number,
+                  onChanged: (value) => _controller.setPhone(value),
                 ),
               ),
             ),
@@ -86,7 +97,7 @@ class _SignupState extends State<Signup> {
               child: Container(
                 padding: const EdgeInsets.only(top: 20, right: 200),
                 child: DropdownButton<String>(
-                  value: dropdownVal,
+                  value: _controller.getType() ? "Customer" : "Driver",
                   items: <String>['Driver', 'Customer']
                       .map<DropdownMenuItem<String>>((String val) {
                     return DropdownMenuItem<String>(
@@ -99,7 +110,11 @@ class _SignupState extends State<Signup> {
                   }).toList(),
                   onChanged: (String? newVal) {
                     setState(() {
-                      dropdownVal = newVal!;
+                      if (newVal == "Driver") {
+                        _controller.setType(false);
+                      } else {
+                        _controller.setType(true);
+                      }
                     });
                   },
                 ),
@@ -118,8 +133,19 @@ class _SignupState extends State<Signup> {
                           backgroundColor: Color.fromARGB(250, 255, 0, 0),
                         ),
                         onPressed: () {
-                          // Navigator.push(
-                          // context, MaterialPageRoute(builder: (_) => loginfirst() ));
+                          _controller.signIn().then(
+                            (value) {
+                              print("New Accout Made");
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => Landing())).onError(
+                                (error, stackTrace) {
+                                  print("Error ${error.toString()}");
+                                },
+                              );
+                            },
+                          );
                         },
                       ))),
             )

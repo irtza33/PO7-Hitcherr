@@ -39,6 +39,8 @@ dependencies:
   mvc_pattern: 
   flex_color_scheme: ^6.0.1
   cloud_firestore: ^4.0.4
+  firebase_core: ^2.2.0
+  firebase_auth: ^4.1.2
 
 dev_dependencies:
   flutter_test:

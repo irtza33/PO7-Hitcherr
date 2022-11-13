@@ -22,21 +22,24 @@ class _ViewState extends State<View> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Container(
-                height: 360.0,
-                width: 360.0,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/Hitcherr_logo.png'),
-                    fit: BoxFit.fill,
+              Padding(
+                padding: const EdgeInsets.only(top: 10, left: 10),
+                child: Container(
+                  height: 360.0,
+                  width: 360.0,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/Hitcherr_logo.png'),
+                      fit: BoxFit.fill,
+                    ),
+                    shape: BoxShape.circle,
                   ),
-                  shape: BoxShape.circle,
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Container(
-                    padding: const EdgeInsets.only(top: 3, left: 3),
+                    padding: const EdgeInsets.only(top: 100, left: 3),
                     child: SizedBox(
                         width: 250,
                         height: 50,
