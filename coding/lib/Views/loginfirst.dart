@@ -11,17 +11,25 @@ class loginfirst extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
         appBar: AppBar(
-          title: const Text('Welcome to Hitcherr'),
+          title: const Text('Account Type'),
           centerTitle: true,
-          backgroundColor: Color.fromARGB(255, 150, 0, 0),
+          backgroundColor: Color(0xff4a44bf),
         ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
+              Container(
+                margin: EdgeInsets.only(bottom: 50),
+                child: Center(
+                  child: Text(
+                    'Log In',
+                    style: TextStyle(fontSize: 26),
+                  ),
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Container(
@@ -30,9 +38,12 @@ class loginfirst extends StatelessWidget {
                         width: 250,
                         height: 50,
                         child: ElevatedButton(
-                          child: const Text('Login as driver'),
+                          child: const Text('Driver',
+                              style: TextStyle(fontSize: 18)),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color.fromARGB(250, 255, 0, 0),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)),
+                            backgroundColor: Color(0xff7692ff),
                           ),
                           onPressed: () {
                             Navigator.push(
@@ -51,9 +62,12 @@ class loginfirst extends StatelessWidget {
                         width: 250, // <-- Your width
                         height: 50, // <-- Your height
                         child: ElevatedButton(
-                          child: const Text('Login as rider'),
+                          child: const Text('Rider',
+                              style: TextStyle(fontSize: 18)),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color.fromARGB(250, 255, 0, 0),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)),
+                            backgroundColor: Color(0xff7692ff),
                           ),
                           onPressed: () {
                             Navigator.push(

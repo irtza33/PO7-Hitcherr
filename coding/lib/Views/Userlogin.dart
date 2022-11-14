@@ -21,22 +21,28 @@ class _UserSigninState extends State<UserSignin> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 150, 0, 0),
+        title: Text('Rider'),
+        backgroundColor: Color(0xff4a44bf),
+        centerTitle: true,
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+            Center(
+              child: Text(
+                'Welcome Back!',
+                style: TextStyle(fontSize: 26),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Container(
                 padding: const EdgeInsets.only(top: 50, left: 3),
                 child: TextField(
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'Email Address'),
+                  decoration: deco('Email Address'),
                   onChanged: (value) => _controller.setEmail(value),
                 ),
               ),
@@ -46,8 +52,7 @@ class _UserSigninState extends State<UserSignin> {
               child: Container(
                 padding: const EdgeInsets.only(top: 50, left: 3),
                 child: TextField(
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'Password'),
+                  decoration: deco('Password'),
                   onChanged: (value) => _controller.setPassword(value),
                   obscureText: true,
                   obscuringCharacter: "*",
@@ -62,9 +67,14 @@ class _UserSigninState extends State<UserSignin> {
                   width: 150,
                   height: 50,
                   child: ElevatedButton(
-                      child: const Text('Login as Rider'),
+                      child: const Text(
+                        'Login',
+                        style: TextStyle(fontSize: 16),
+                      ),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromARGB(250, 255, 0, 0),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                        backgroundColor: Color(0xff7692ff),
                       ),
                       onPressed: () {
                         _controller.signIn().then(
@@ -102,3 +112,13 @@ class _UserSigninState extends State<UserSignin> {
     );
   }
 }
+
+InputDecoration deco(String name) => InputDecoration(
+    fillColor: const Color.fromRGBO(50, 58, 80, 1),
+    labelText: name,
+    labelStyle: const TextStyle(color: Color.fromRGBO(240, 238, 244, 1)),
+    enabledBorder: const OutlineInputBorder(
+        borderSide: BorderSide(color: Color.fromRGBO(50, 58, 80, 1), width: 2)),
+    focusedBorder: const OutlineInputBorder(
+        borderSide:
+            BorderSide(color: Color.fromRGBO(118, 146, 255, 1), width: 2)));

@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Drivers Application',
-      theme: FlexThemeData.light(scheme: FlexScheme.green),
+      theme: FlexThemeData.dark(scheme: FlexScheme.hippieBlue),
       // darkTheme: FlexThemeData.dark(
       //     scheme: FlexScheme.mallardGreen, darkIsTrueBlack: true),
       //themeMode: ThemeMode.dark,

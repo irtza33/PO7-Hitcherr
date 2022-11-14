@@ -25,16 +25,18 @@ class _LandingState extends State<Landing> {
                 width: 250,
                 height: 50,
                 child: ElevatedButton(
-                  child: const Text('Log Out'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromARGB(250, 255, 0, 0),
-                  ),
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                      backgroundColor: Color(0xff7692ff),
+                    ),
                   onPressed: () {
                     FirebaseAuth.instance.signOut().then((value) {
                       Navigator.push(
                           context, MaterialPageRoute(builder: (_) => View()));
                     });
                   },
+                    child: const Text('Log Out', style: TextStyle(fontSize: 16)),
                 ),
               ),
             )

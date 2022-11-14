@@ -44,9 +44,12 @@ class _ViewState extends State<View> {
                         width: 250,
                         height: 50,
                         child: ElevatedButton(
-                          child: const Text('Login'),
+                          child: const Text('Login',
+                              style: TextStyle(fontSize: 18)),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color.fromARGB(250, 255, 0, 0),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)),
+                            backgroundColor: Color(0xff7692ff),
                           ),
                           onPressed: () {
                             Navigator.push(
@@ -65,9 +68,14 @@ class _ViewState extends State<View> {
                         width: 250, // <-- Your width
                         height: 50, // <-- Your height
                         child: ElevatedButton(
-                          child: const Text('Sign Up'),
+                          child: const Text(
+                            'Sign Up',
+                            style: TextStyle(fontSize: 18),
+                          ),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color.fromARGB(250, 255, 0, 0),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)),
+                            backgroundColor: Color(0xff7692ff),
                           ),
                           onPressed: () {
                             Navigator.push(context,
