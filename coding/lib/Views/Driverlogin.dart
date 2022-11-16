@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:coding/Views/View.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:coding/Models/DriverSigninModel.dart';
+import 'package:coding/Controllers/DriverSigninController.dart';
+import 'package:coding/Views/Landing.dart';
 
-class Driverlogin extends StatelessWidget {
-  const Driverlogin({Key? key}) : super(key: key);
+class DriverSignin extends StatefulWidget {
+  const DriverSignin({Key? key}) : super(key: key);
+  @override
+  _DriverSigninState createState() => _DriverSigninState();
+}
+
+class _DriverSigninState extends State<DriverSignin> {
+  final DriverSigninController _controller = DriverSigninController();
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +40,7 @@ class Driverlogin extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 50, left: 3),
                 child: TextField(
                   decoration: deco('Email Address'),
+                  onChanged: (value) => _controller.setEmail(value),
                 ),
               ),
             ),
@@ -38,8 +49,23 @@ class Driverlogin extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.only(top: 50, left: 3),
                 child: TextField(
-                  decoration: deco('Password'),
+                  decoration: InputDecoration(
+                      errorText: _controller.getFbErr()
+                          ? _controller.getErr().toString()
+                          : null,
+                      fillColor: const Color.fromRGBO(50, 58, 80, 1),
+                      labelText: "Password",
+                      labelStyle: const TextStyle(
+                          color: Color.fromRGBO(240, 238, 244, 1)),
+                      enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromRGBO(50, 58, 80, 1), width: 2)),
+                      focusedBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromRGBO(118, 146, 255, 1),
+                              width: 2))),
                   obscureText: true,
+                  onChanged: (value) => _controller.setPassword(value),
                   obscuringCharacter: "*",
                 ),
               ),
@@ -58,7 +84,43 @@ class Driverlogin extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20)),
                       backgroundColor: Color(0xff7692ff),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      _controller.signIn().then((value) {
+                        print("I AM HERE ${value}");
+                        if (value != null) {
+                          _controller.checkAuth().then((value) {
+                            if (DriverSigninModel.checkState == 0) {
+                              print("Signed in successfully");
+                              _controller.setFbErr(false, null);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => Landing())).onError(
+                                (error, stackTrace) {
+                                  print("Error ${error.toString()}");
+                                },
+                              );
+                            } else {
+                              FirebaseAuth.instance.signOut();
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text(
+                                          "You are not registered as a Driver")));
+                            }
+                          });
+                        } else {
+                          Navigator.pop(context);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => DriverSignin())).onError(
+                            (error, stackTrace) {
+                              print("Error ${error.toString()}");
+                            },
+                          );
+                        }
+                      });
+                    },
                   ),
                 ),
               ),

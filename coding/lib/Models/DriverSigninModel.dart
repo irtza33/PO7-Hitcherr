@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-class UserSigninModel {
+class DriverSigninModel {
   static String _email = "";
   static String _password = "";
   static bool _fbErr = false;

@@ -42,7 +42,18 @@ class _UserSigninState extends State<UserSignin> {
               child: Container(
                 padding: const EdgeInsets.only(top: 50, left: 3),
                 child: TextField(
-                  decoration: deco('Email Address'),
+                  decoration: InputDecoration(
+                      fillColor: const Color.fromRGBO(50, 58, 80, 1),
+                      labelText: "Email",
+                      labelStyle: const TextStyle(
+                          color: Color.fromRGBO(240, 238, 244, 1)),
+                      enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromRGBO(50, 58, 80, 1), width: 2)),
+                      focusedBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromRGBO(118, 146, 255, 1),
+                              width: 2))),
                   onChanged: (value) => _controller.setEmail(value),
                 ),
               ),
@@ -52,7 +63,21 @@ class _UserSigninState extends State<UserSignin> {
               child: Container(
                 padding: const EdgeInsets.only(top: 50, left: 3),
                 child: TextField(
-                  decoration: deco('Password'),
+                  decoration: InputDecoration(
+                      fillColor: const Color.fromRGBO(50, 58, 80, 1),
+                      errorText: _controller.getFbErr()
+                          ? _controller.getErr().toString()
+                          : null,
+                      labelText: "Password",
+                      labelStyle: const TextStyle(
+                          color: Color.fromRGBO(240, 238, 244, 1)),
+                      enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromRGBO(50, 58, 80, 1), width: 2)),
+                      focusedBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromRGBO(118, 146, 255, 1),
+                              width: 2))),
                   onChanged: (value) => _controller.setPassword(value),
                   obscureText: true,
                   obscuringCharacter: "*",
@@ -77,31 +102,41 @@ class _UserSigninState extends State<UserSignin> {
                         backgroundColor: Color(0xff7692ff),
                       ),
                       onPressed: () {
-                        _controller.signIn().then(
-                          (value) {
-                            if (value != null) {
-                              _controller.checkAuth().then((value) {
-                                if (UserSigninModel.checkState == 1) {
-                                  print("Signed in successfully");
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (_) => Landing())).onError(
-                                    (error, stackTrace) {
-                                      print("Error ${error.toString()}");
-                                    },
-                                  );
-                                } else {
-                                  FirebaseAuth.instance.signOut();
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                          content: Text(
-                                              "You are not registered as a customer")));
-                                }
-                              });
-                            }
-                          },
-                        );
+                        _controller.signIn().then((value) {
+                          //print("HERE WE ARE ${value}");
+                          if (value != null) {
+                            _controller.checkAuth().then((value) {
+                              if (UserSigninModel.checkState == 1) {
+                                print("Signed in successfully");
+                                _controller.setFbErr(false, null);
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => Landing())).onError(
+                                  (error, stackTrace) {
+                                    print("Error ${error.toString()}");
+                                  },
+                                );
+                              } else {
+                                FirebaseAuth.instance.signOut();
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text(
+                                            "You are not registered as a customer")));
+                              }
+                            });
+                          } else {
+                            Navigator.pop(context);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => UserSignin())).onError(
+                              (error, stackTrace) {
+                                print("Error ${error.toString()}");
+                              },
+                            );
+                          }
+                        });
                       }),
                 ),
               ),
@@ -112,13 +147,3 @@ class _UserSigninState extends State<UserSignin> {
     );
   }
 }
-
-InputDecoration deco(String name) => InputDecoration(
-    fillColor: const Color.fromRGBO(50, 58, 80, 1),
-    labelText: name,
-    labelStyle: const TextStyle(color: Color.fromRGBO(240, 238, 244, 1)),
-    enabledBorder: const OutlineInputBorder(
-        borderSide: BorderSide(color: Color.fromRGBO(50, 58, 80, 1), width: 2)),
-    focusedBorder: const OutlineInputBorder(
-        borderSide:
-            BorderSide(color: Color.fromRGBO(118, 146, 255, 1), width: 2)));

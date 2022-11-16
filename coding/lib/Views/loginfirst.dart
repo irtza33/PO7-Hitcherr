@@ -4,9 +4,19 @@ import 'package:coding/Controllers/Controller.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:coding/Views/Driverlogin.dart';
 import 'package:coding/Views/Userlogin.dart';
+import 'package:coding/Controllers/UserSigninController.dart';
+import 'package:coding/Controllers/DriverSigninController.dart';
 
-class loginfirst extends StatelessWidget {
-  const loginfirst({super.key});
+class loginfirst extends StatefulWidget {
+  const loginfirst({Key? key}) : super(key: key);
+  @override
+  _loginfirst createState() => _loginfirst();
+}
+
+class _loginfirst extends State<loginfirst> {
+  //const loginfirst({super.key});
+  final UserSigninController _controllerU = UserSigninController();
+  final DriverSigninController _controllerD = DriverSigninController();
 
   @override
   Widget build(BuildContext context) {
@@ -46,10 +56,12 @@ class loginfirst extends StatelessWidget {
                             backgroundColor: Color(0xff7692ff),
                           ),
                           onPressed: () {
+                            _controllerD.setFbErr(
+                                false, null); //refresh error state
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (_) => Driverlogin()));
+                                    builder: (_) => DriverSignin()));
                           },
                         ))),
               ),
@@ -70,6 +82,7 @@ class loginfirst extends StatelessWidget {
                             backgroundColor: Color(0xff7692ff),
                           ),
                           onPressed: () {
+                            _controllerU.setFbErr(false, null);
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
