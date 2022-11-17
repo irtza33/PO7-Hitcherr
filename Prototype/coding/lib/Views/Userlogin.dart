@@ -17,8 +17,10 @@ class UserSignin extends StatefulWidget {
 class _UserSigninState extends State<UserSignin> {
   //const Userlogin({Key? key}) : super(key: key);
 
-  final UserSigninController _controller = UserSigninController();
-  final LandingController _controllerL = LandingController();
+  final UserSigninController _controller =
+      UserSigninController(); //Declaring a controller for sign in
+  final LandingController _controllerL =
+      LandingController(); //Declaring a controller for landing/home page
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +47,7 @@ class _UserSigninState extends State<UserSignin> {
               child: Container(
                 padding: const EdgeInsets.only(top: 50, left: 3),
                 child: TextField(
+                  //Field to take input for email
                   decoration: InputDecoration(
                       fillColor: const Color.fromRGBO(50, 58, 80, 1),
                       labelText: "Email",
@@ -57,7 +60,8 @@ class _UserSigninState extends State<UserSignin> {
                           borderSide: BorderSide(
                               color: Color.fromRGBO(118, 146, 255, 1),
                               width: 2))),
-                  onChanged: (value) => _controller.setEmail(value),
+                  onChanged: (value) => _controller.setEmail(
+                      value), //Change state of model via the controller as the email is typed
                 ),
               ),
             ),
@@ -71,7 +75,7 @@ class _UserSigninState extends State<UserSignin> {
                       errorText: _controller.getFbErr()
                           ? _controller.getErr().toString()
                           : null,
-                      labelText: "Password",
+                      labelText: "Password", //Field to take input for Password
                       labelStyle: const TextStyle(
                           color: Color.fromRGBO(240, 238, 244, 1)),
                       enabledBorder: const OutlineInputBorder(
@@ -81,9 +85,10 @@ class _UserSigninState extends State<UserSignin> {
                           borderSide: BorderSide(
                               color: Color.fromRGBO(118, 146, 255, 1),
                               width: 2))),
-                  onChanged: (value) => _controller.setPassword(value),
+                  onChanged: (value) => _controller.setPassword(
+                      value), //Changer state of model via controller
                   obscureText: true,
-                  obscuringCharacter: "*",
+                  obscuringCharacter: "*", //Hide password using *
                 ),
               ),
             ),
@@ -95,6 +100,7 @@ class _UserSigninState extends State<UserSignin> {
                   width: 150,
                   height: 50,
                   child: ElevatedButton(
+                      //Declare and style login button
                       child: const Text(
                         'Login',
                         style: TextStyle(fontSize: 16),
@@ -106,20 +112,26 @@ class _UserSigninState extends State<UserSignin> {
                       ),
                       onPressed: () {
                         _controller.signIn().then((value) {
+                          //Pressing the login button signs in the user and returns a promise
                           //print("HERE WE ARE ${value}");
                           if (value != null) {
                             _controller.checkAuth().then((value) {
+                              //controller checks whether a user is not logging into drivers login or vice versa
                               if (UserSigninModel.checkState == 1) {
+                                //completelty sign in if login attempt was from user and not driver
                                 print("Signed in successfully");
-                                _controller.setFbErr(false, null);
+                                _controller.setFbErr(false,
+                                    null); //The controller sets the model to no errors in sign in process
 
                                 _controllerL.checkStatus().then((_) {
+                                  //controller checks whether account is approved or not
                                   if (_controllerL.getApproval()) {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (_) =>
                                                 ApprovedLanding())).onError(
+                                      //Navigate to home screen for approved users
                                       (error, stackTrace) {
                                         print("Error ${error.toString()}");
                                       },
@@ -129,6 +141,7 @@ class _UserSigninState extends State<UserSignin> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (_) => Landing())).onError(
+                                      //Navigate to home screen for pending approval users
                                       (error, stackTrace) {
                                         print("Error ${error.toString()}");
                                       },
@@ -140,7 +153,7 @@ class _UserSigninState extends State<UserSignin> {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
                                         content: Text(
-                                            "You are not registered as a customer")));
+                                            "You are not registered as a customer"))); //If a driver tries to log in to user login
                               }
                             });
                           } else {
@@ -149,6 +162,7 @@ class _UserSigninState extends State<UserSignin> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (_) => UserSignin())).onError(
+                              //Refresh page upon error to try again
                               (error, stackTrace) {
                                 print("Error ${error.toString()}");
                               },

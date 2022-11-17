@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:coding/Controllers/Controller.dart';
+
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:coding/Views/Driverlogin.dart';
 import 'package:coding/Views/Userlogin.dart';
@@ -15,8 +15,10 @@ class loginfirst extends StatefulWidget {
 
 class _loginfirst extends State<loginfirst> {
   //const loginfirst({super.key});
-  final UserSigninController _controllerU = UserSigninController();
-  final DriverSigninController _controllerD = DriverSigninController();
+  final UserSigninController _controllerU =
+      UserSigninController(); //initialise sign in controller for user
+  final DriverSigninController _controllerD =
+      DriverSigninController(); //Initialise sign in controller for driver
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +63,8 @@ class _loginfirst extends State<loginfirst> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (_) => DriverSignin()));
+                                    builder: (_) =>
+                                        DriverSignin())); //Navigate to driver sign in page
                           },
                         ))),
               ),
@@ -82,11 +85,13 @@ class _loginfirst extends State<loginfirst> {
                             backgroundColor: Color(0xff7692ff),
                           ),
                           onPressed: () {
-                            _controllerU.setFbErr(false, null);
+                            _controllerU.setFbErr(
+                                false, null); //Set error state for user
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (_) => UserSignin()));
+                                    builder: (_) =>
+                                        UserSignin())); //Navigate to user sign in page
                           },
                         ))),
               ),

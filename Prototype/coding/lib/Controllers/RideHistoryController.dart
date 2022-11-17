@@ -9,44 +9,28 @@ class RideHistoryController extends ControllerMVC {
     return _this;
   }
 
-  static RideHistoryController _this = RideHistoryController._();
+  static RideHistoryController _this =
+      RideHistoryController._(); //Initialise controller
   RideHistoryController._();
 
   int getFare() {
-    return RideHistoryModel.gfare;
+    return RideHistoryModel.gfare; //get fare from model
   }
 
   int getRating() {
-    return RideHistoryModel.grating;
+    return RideHistoryModel.grating; //get rating from model
   }
 
   void setFare(int toSet) {
-    RideHistoryModel.sfare(toSet);
+    RideHistoryModel.sfare(toSet); //set fare to model
   }
 
   void setRating(int toSet) {
-    RideHistoryModel.srating(toSet);
+    RideHistoryModel.srating(toSet); //set rating to model
   }
 
   Future renderHistory() async {
-    return FirebaseFirestore.instance.collection('rides');
-    // try {
-    //   var currentUser = FirebaseAuth.instance.currentUser;
-    //   if (currentUser != null) {
-    //     var res =
-    //         await users.where('email', isEqualTo: currentUser.email).get();
-
-    //     if (res.docs.length > 0) {
-    //       //DriverSigninModel.checkState = res.docs[0]['type'];
-    //       //print(res.docs[0]['fare']);
-    //       return res.docs;
-    //     }
-    //   }
-    // } on FirebaseException catch (err) {
-    //   print(err);
-    // } catch (err) {
-    //   print(err.toString());
-    //   return null;
-    // }
+    return FirebaseFirestore.instance
+        .collection('rides'); //access rides date from firestore
   }
 }

@@ -2,7 +2,6 @@ import 'package:coding/Views/loginfirst.dart';
 import 'package:coding/Views/Signup.dart';
 
 import 'package:flutter/material.dart';
-import 'package:coding/Controllers/Controller.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 class View extends StatefulWidget {
@@ -12,24 +11,26 @@ class View extends StatefulWidget {
 }
 
 class _ViewState extends State<View> {
-  final Controller _controller = Controller();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment:
+                MainAxisAlignment.center, //Allign content to the center
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(top: 10, left: 10),
+                padding: const EdgeInsets.only(
+                    top: 10, left: 10), //Provide padding to data
                 child: Container(
                   height: 360.0,
                   width: 360.0,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('assets/images/Hitcherr_logo.png'),
+                      image: AssetImage(
+                          'assets/images/Hitcherr_logo.png'), //Add logo to app
                       fit: BoxFit.fill,
                     ),
                     shape: BoxShape.circle,
@@ -44,9 +45,11 @@ class _ViewState extends State<View> {
                         width: 250,
                         height: 50,
                         child: ElevatedButton(
+                          //Create button for login
                           child: const Text('Login',
                               style: TextStyle(fontSize: 18)),
                           style: ElevatedButton.styleFrom(
+                            //Styling the button
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20)),
                             backgroundColor: Color(0xff7692ff),
@@ -55,7 +58,8 @@ class _ViewState extends State<View> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (_) => loginfirst()));
+                                    builder: (_) =>
+                                        loginfirst())); //Pressing the button takes you to Login View
                           },
                         ))),
               ),
@@ -68,18 +72,23 @@ class _ViewState extends State<View> {
                         width: 250, // <-- Your width
                         height: 50, // <-- Your height
                         child: ElevatedButton(
+                          //Create SignUp button
                           child: const Text(
                             'Sign Up',
                             style: TextStyle(fontSize: 18),
                           ),
                           style: ElevatedButton.styleFrom(
+                            //Styling the button
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20)),
                             backgroundColor: Color(0xff7692ff),
                           ),
                           onPressed: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (_) => Signup()));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) =>
+                                        Signup())); //Pressing the button takes you to Signup View
                           },
                         ))),
               ),

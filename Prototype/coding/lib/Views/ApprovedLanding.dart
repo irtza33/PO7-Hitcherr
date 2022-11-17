@@ -13,7 +13,8 @@ class ApprovedLanding extends StatefulWidget {
 }
 
 class _ApprovedLandingState extends State<ApprovedLanding> {
-  final LandingController _controller = LandingController();
+  final LandingController _controller =
+      LandingController(); //Initialise landing page controller
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +41,7 @@ class _ApprovedLandingState extends State<ApprovedLanding> {
                             context,
                             MaterialPageRoute(
                                 builder: (_) => RideHistory())).onError(
+                          //Navigate to ride history view
                           (error, stackTrace) {
                             print("Error ${error.toString()}");
                           },
@@ -61,8 +63,12 @@ class _ApprovedLandingState extends State<ApprovedLanding> {
                   ),
                   onPressed: () {
                     FirebaseAuth.instance.signOut().then((value) {
+                      //Signout user
                       Navigator.push(
-                          context, MaterialPageRoute(builder: (_) => View()));
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) =>
+                                  View())); //Navigate to original home page
                     });
                   },
                   child: const Text('Log Out', style: TextStyle(fontSize: 16)),

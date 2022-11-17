@@ -5,6 +5,7 @@ import 'package:coding/Views/View.dart';
 import 'package:coding/Controllers/LandingController.dart';
 
 class Landing extends StatefulWidget {
+  //This View is for unapproved users
   const Landing({Key? key}) : super(key: key);
 
   @override
@@ -36,8 +37,11 @@ class _LandingState extends State<Landing> {
                   ),
                   onPressed: () {
                     FirebaseAuth.instance.signOut().then((value) {
+                      //Sign out user upon pressing logout
                       Navigator.push(
-                          context, MaterialPageRoute(builder: (_) => View()));
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => View())); //Navigate to View Page
                     });
                   },
                   child: const Text('Log Out', style: TextStyle(fontSize: 16)),
@@ -46,7 +50,7 @@ class _LandingState extends State<Landing> {
             ),
             Padding(
               padding: const EdgeInsets.only(top: 30),
-              child: Text(_controller.getDisplay(),
+              child: Text(_controller.getDisplay(), //Fetch error message
                   style: TextStyle(fontSize: 16)),
             )
           ],

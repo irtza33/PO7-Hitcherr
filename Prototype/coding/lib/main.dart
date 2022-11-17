@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       // darkTheme: FlexThemeData.dark(
       //     scheme: FlexScheme.mallardGreen, darkIsTrueBlack: true),
       //themeMode: ThemeMode.dark,
-      home: View(),
+      home: View(), //Calling the home page of the application
     );
   }
 }

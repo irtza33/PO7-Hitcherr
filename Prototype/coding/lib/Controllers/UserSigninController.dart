@@ -37,28 +37,30 @@ class UserSigninController extends ControllerMVC {
     try {
       return await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: UserSigninModel.getEmail,
-          password: UserSigninModel.getPassword);
+          password:
+              UserSigninModel.getPassword); //Sign in using email and password
     } on FirebaseAuthException catch (err) {
-      UserSigninModel.setFbErr(true, err.toString());
+      UserSigninModel.setFbErr(true,
+          err.toString()); //Turn error state to true upon exception thrown by firebase
     }
-    // return FirebaseAuth.instance.signInWithEmailAndPassword(
-    //     email: UserSigninModel.getEmail, password: UserSigninModel.getPassword);
   }
 
   Future checkAuth() async {
-    final CollectionReference users =
-        FirebaseFirestore.instance.collection('users');
+    final CollectionReference users = FirebaseFirestore.instance
+        .collection('users'); //Extract data from collection
     try {
-      var res =
-          await users.where('email', isEqualTo: UserSigninModel.getEmail).get();
+      var res = await users
+          .where('email', isEqualTo: UserSigninModel.getEmail)
+          .get(); //Filter out data with only the signed in user's email
 
       if (res.docs.length > 0) {
-        UserSigninModel.checkState = res.docs[0]['type'];
+        UserSigninModel.checkState = res.docs[0]
+            ['type']; //Extract type of user's account and update model state
       }
     } on FirebaseException catch (err) {
-      print(err);
+      print(err); //catch firebase exceptions
     } catch (err) {
-      print(err.toString());
+      print(err.toString()); //catch regular errors
       return null;
     }
   }

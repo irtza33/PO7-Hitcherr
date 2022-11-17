@@ -11,9 +11,11 @@ class RideHistory extends StatefulWidget {
 }
 
 class _RideHistoryState extends State<RideHistory> {
-  final RideHistoryController _controller = RideHistoryController();
-  Stream<QuerySnapshot> _streamRides =
-      FirebaseFirestore.instance.collection('rides').snapshots();
+  final RideHistoryController _controller =
+      RideHistoryController(); //Initialise ride history controller
+  Stream<QuerySnapshot> _streamRides = FirebaseFirestore.instance
+      .collection('rides')
+      .snapshots(); //Fetch snapshots from rides collection in firestore
   void initState() {
     super.initState();
     _streamRides = FirebaseFirestore.instance.collection('rides').snapshots();
@@ -23,19 +25,27 @@ class _RideHistoryState extends State<RideHistory> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: StreamBuilder<QuerySnapshot>(
-        stream: _streamRides,
+        stream:
+            _streamRides, //Adding snapshots in stream so that new data is rendered in real time
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasError) {
-            return Center(child: Text(snapshot.error.toString()));
+            return Center(
+                child: Text(snapshot.error
+                    .toString())); //Render error if snapshots cannot be fetched
           }
           if (snapshot.connectionState == ConnectionState.active) {
-            QuerySnapshot querySnapshot = snapshot.data;
-            List<QueryDocumentSnapshot> listQDS = querySnapshot.docs;
+            //Snapshots updating in real time
+            QuerySnapshot querySnapshot =
+                snapshot.data; //Extract data from snapshot
+            List<QueryDocumentSnapshot> listQDS =
+                querySnapshot.docs; //Extract docs from query and store in list
             return ListView.builder(
               itemCount: listQDS.length,
               itemBuilder: (context, idx) {
                 QueryDocumentSnapshot doc = listQDS[idx];
-                String toRet = doc['fare'] + '         ' + doc['rating'];
+                String toRet = doc['fare'] +
+                    '         ' +
+                    doc['rating']; //Extract fare and rating
                 Container(
                   color: Colors.white, //make the table
                 );
@@ -44,7 +54,9 @@ class _RideHistoryState extends State<RideHistory> {
             );
           }
 
-          return Center(child: CircularProgressIndicator());
+          return Center(
+              child:
+                  CircularProgressIndicator()); //Render moving circle for loading if data fetch takes time
         },
       ),
     );

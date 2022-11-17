@@ -10,13 +10,15 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
-  String dropdownVal = "Driver";
-  final SignupController _controller = SignupController();
+  String dropdownVal = "Driver"; //Initialise dropdown value with Driver
+  final SignupController _controller =
+      SignupController(); //Initialise controller with signup controller
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset:
+          true, //Controlling for screen resizing upon keyboard popup
       appBar: AppBar(
         title: Text('Sign Up'),
         backgroundColor: Color(0xff4a44bf),
@@ -40,7 +42,8 @@ class _SignupState extends State<Signup> {
                   padding: const EdgeInsets.only(top: 30, left: 3),
                   child: TextField(
                     decoration: deco('Email Address'),
-                    onChanged: (value) => _controller.setEmail(value),
+                    onChanged: (value) => _controller
+                        .setEmail(value), //Set model state via controller
                   ),
                 ),
               ),
@@ -51,8 +54,9 @@ class _SignupState extends State<Signup> {
                   child: TextField(
                     decoration: deco('Password'),
                     obscureText: true,
-                    obscuringCharacter: "*",
-                    onChanged: (value) => _controller.setPassword(value),
+                    obscuringCharacter: "*", //hide password
+                    onChanged: (value) => _controller.setPassword(
+                        value), //Update model state using controller
                   ),
                 ),
               ),
@@ -62,7 +66,8 @@ class _SignupState extends State<Signup> {
                   padding: const EdgeInsets.only(top: 50, left: 3),
                   child: TextField(
                     decoration: deco('Full Name'),
-                    onChanged: (value) => _controller.setName(value),
+                    onChanged: (value) => _controller
+                        .setName(value), //Change model state via controller
                   ),
                 ),
               ),
@@ -73,7 +78,8 @@ class _SignupState extends State<Signup> {
                   child: TextField(
                     decoration: deco('CNIC'),
                     keyboardType: TextInputType.number,
-                    onChanged: (value) => _controller.setCnic(value),
+                    onChanged: (value) => _controller
+                        .setCnic(value), //Change model state via controller
                   ),
                 ),
               ),
@@ -84,7 +90,8 @@ class _SignupState extends State<Signup> {
                   child: TextField(
                     decoration: deco('Phone Number'),
                     keyboardType: TextInputType.number,
-                    onChanged: (value) => _controller.setPhone(value),
+                    onChanged: (value) => _controller
+                        .setPhone(value), //Change model state via controller
                   ),
                 ),
               ),
@@ -111,6 +118,7 @@ class _SignupState extends State<Signup> {
                               : "Driver",
                           items: <String>['Driver', 'Customer']
                               .map<DropdownMenuItem<String>>((String val) {
+                            //Map String List to drop down menu items
                             return DropdownMenuItem<String>(
                               value: val,
                               child: Text(
@@ -118,11 +126,12 @@ class _SignupState extends State<Signup> {
                                 style: TextStyle(fontSize: 18),
                               ),
                             );
-                          }).toList(),
+                          }).toList(), //Convert to list
                           onChanged: (String? newVal) {
                             setState(() {
                               if (newVal == "Driver") {
-                                _controller.setType(0);
+                                _controller.setType(
+                                    0); //Set model state via controller upon choosing from dropdown menu
                               } else {
                                 _controller.setType(1);
                               }
@@ -153,14 +162,17 @@ class _SignupState extends State<Signup> {
                           ),
                           onPressed: () {
                             _controller.signUp().then(
+                              //Controller signs up the user
                               (value) {
                                 if (value != null && value.user != null) {
-                                  _controller.updateDB(value.user);
+                                  _controller.updateDB(value
+                                      .user); //Update firestore upon signing up
                                   print("New Account Made");
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (_) => Landing())).onError(
+                                          builder: (_) => View())).onError(
+                                    //navigate to view upon successful signup
                                     (error, stackTrace) {
                                       print("Error ${error.toString()}");
                                     },

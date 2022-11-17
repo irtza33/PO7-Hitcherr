@@ -10,35 +10,39 @@ class LandingController extends ControllerMVC {
     return _this;
   }
 
-  static LandingController _this = LandingController._();
+  static LandingController _this =
+      LandingController._(); //initialsie controller
   LandingController._();
 
   String getDisplay() {
     //print("HELLO${LandingModel.gdisplay}");
-    return LandingModel.gdisplay;
+    return LandingModel.gdisplay; //return display state from model
   }
 
   bool getApproval() {
-    return LandingModel.gapproved;
+    return LandingModel.gapproved; //return approval state from model
   }
 
   Future checkStatus() async {
-    final CollectionReference users =
-        FirebaseFirestore.instance.collection('users');
+    final CollectionReference users = FirebaseFirestore.instance
+        .collection('users'); //extract user data from firestore
     try {
       var currentUser = FirebaseAuth.instance.currentUser;
       if (currentUser != null) {
-        var res =
-            await users.where('email', isEqualTo: currentUser.email).get();
+        var res = await users
+            .where('email', isEqualTo: currentUser.email)
+            .get(); //filter data based on current user's email
 
         if (res.docs.length > 0) {
           //print("FOUND IT ${res.docs[0]['approved']}");
-          LandingModel.sapproved(res.docs[0]['approved']);
+          LandingModel.sapproved(
+              res.docs[0]['approved']); //filter data based on approved field
         }
         if (LandingModel.gapproved) {
-          LandingModel.sdisplay("");
+          LandingModel.sdisplay(""); //display nothing if account is approved
         } else {
-          LandingModel.sdisplay("Your account is pending approval");
+          LandingModel.sdisplay(
+              "Your account is pending approval"); //display message if account is pending approval
         }
       }
     } on FirebaseException catch (err) {

@@ -14,8 +14,10 @@ class DriverSignin extends StatefulWidget {
 }
 
 class _DriverSigninState extends State<DriverSignin> {
-  final DriverSigninController _controller = DriverSigninController();
-  final LandingController _controllerL = LandingController();
+  final DriverSigninController _controller =
+      DriverSigninController(); //initialise driver signin controller
+  final LandingController _controllerL =
+      LandingController(); //initialise controller for landing page
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +45,8 @@ class _DriverSigninState extends State<DriverSignin> {
                 padding: const EdgeInsets.only(top: 50, left: 3),
                 child: TextField(
                   decoration: deco('Email Address'),
-                  onChanged: (value) => _controller.setEmail(value),
+                  onChanged: (value) => _controller.setEmail(
+                      value), //Use controller to update state for email in model
                 ),
               ),
             ),
@@ -53,8 +56,10 @@ class _DriverSigninState extends State<DriverSignin> {
                 padding: const EdgeInsets.only(top: 50, left: 3),
                 child: TextField(
                   decoration: InputDecoration(
-                      errorText: _controller.getFbErr()
-                          ? _controller.getErr().toString()
+                      errorText: _controller.getFbErr() //Check if error exists
+                          ? _controller
+                              .getErr()
+                              .toString() //If error exists show it using a red highlighted box
                           : null,
                       fillColor: const Color.fromRGBO(50, 58, 80, 1),
                       labelText: "Password",
@@ -68,8 +73,9 @@ class _DriverSigninState extends State<DriverSignin> {
                               color: Color.fromRGBO(118, 146, 255, 1),
                               width: 2))),
                   obscureText: true,
-                  onChanged: (value) => _controller.setPassword(value),
-                  obscuringCharacter: "*",
+                  onChanged: (value) => _controller
+                      .setPassword(value), //Update model state using controller
+                  obscuringCharacter: "*", //hide password
                 ),
               ),
             ),
@@ -89,19 +95,24 @@ class _DriverSigninState extends State<DriverSignin> {
                     ),
                     onPressed: () {
                       _controller.signIn().then((value) {
-                        print("I AM HERE ${value}");
+                        //Controller signs you in using firebease auth
+                        //print("I AM HERE ${value}");
                         if (value != null) {
                           _controller.checkAuth().then((value) {
                             if (DriverSigninModel.checkState == 0) {
+                              //Person signing in should be a driver
                               print("Signed in successfully");
-                              _controller.setFbErr(false, null);
+                              _controller.setFbErr(false,
+                                  null); //Set error state to null and false
                               _controllerL.checkStatus().then((_) {
+                                //Check if signed in user has an approved account
                                 if (_controllerL.getApproval()) {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (_) =>
                                               ApprovedLanding())).onError(
+                                    //Navigate to approved users home page upon checking
                                     (error, stackTrace) {
                                       print("Error ${error.toString()}");
                                     },
@@ -111,6 +122,7 @@ class _DriverSigninState extends State<DriverSignin> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (_) => Landing())).onError(
+                                    //Navigate to home page for unapproved users if user is not approved by admin
                                     (error, stackTrace) {
                                       print("Error ${error.toString()}");
                                     },
@@ -118,11 +130,12 @@ class _DriverSigninState extends State<DriverSignin> {
                                 }
                               });
                             } else {
-                              FirebaseAuth.instance.signOut();
+                              FirebaseAuth.instance
+                                  .signOut(); //Signout if person trying to signin is not driver
                               ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                       content: Text(
-                                          "You are not registered as a Driver")));
+                                          "You are not registered as a Driver"))); //Show message that a non-driver user made an attempt tp sign in
                             }
                           });
                         } else {
@@ -131,6 +144,7 @@ class _DriverSigninState extends State<DriverSignin> {
                               context,
                               MaterialPageRoute(
                                   builder: (_) => DriverSignin())).onError(
+                            //Navigate back to signin page upon any error
                             (error, stackTrace) {
                               print("Error ${error.toString()}");
                             },
