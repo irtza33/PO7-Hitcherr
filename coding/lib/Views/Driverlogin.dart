@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:coding/Models/DriverSigninModel.dart';
 import 'package:coding/Controllers/DriverSigninController.dart';
 import 'package:coding/Views/Landing.dart';
+import 'package:coding/Controllers/LandingController.dart';
+import 'package:coding/Views/ApprovedLanding.dart';
 
 class DriverSignin extends StatefulWidget {
   const DriverSignin({Key? key}) : super(key: key);
@@ -13,6 +15,7 @@ class DriverSignin extends StatefulWidget {
 
 class _DriverSigninState extends State<DriverSignin> {
   final DriverSigninController _controller = DriverSigninController();
+  final LandingController _controllerL = LandingController();
 
   @override
   Widget build(BuildContext context) {
@@ -92,14 +95,28 @@ class _DriverSigninState extends State<DriverSignin> {
                             if (DriverSigninModel.checkState == 0) {
                               print("Signed in successfully");
                               _controller.setFbErr(false, null);
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => Landing())).onError(
-                                (error, stackTrace) {
-                                  print("Error ${error.toString()}");
-                                },
-                              );
+                              _controllerL.checkStatus().then((_) {
+                                if (_controllerL.getApproval()) {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) =>
+                                              ApprovedLanding())).onError(
+                                    (error, stackTrace) {
+                                      print("Error ${error.toString()}");
+                                    },
+                                  );
+                                } else {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => Landing())).onError(
+                                    (error, stackTrace) {
+                                      print("Error ${error.toString()}");
+                                    },
+                                  );
+                                }
+                              });
                             } else {
                               FirebaseAuth.instance.signOut();
                               ScaffoldMessenger.of(context).showSnackBar(

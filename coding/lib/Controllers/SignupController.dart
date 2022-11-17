@@ -24,6 +24,14 @@ class SignupController extends ControllerMVC {
     return SignupModel.gtype;
   }
 
+  bool getApproved() {
+    return SignupModel.gapproved;
+  }
+
+  void setApproved(bool toSet) {
+    SignupModel.sapproved(toSet);
+  }
+
   void setEmail(String toSet) {
     SignupModel.semail(toSet);
   }
@@ -48,13 +56,16 @@ class SignupController extends ControllerMVC {
     SignupModel.stype(toSet);
   }
 
-  Future signIn() {
+  Future signUp() {
     return FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: getEmail(), password: getPassword());
   }
 
   void updateDB(User user) async {
-    //User? user = await FirebaseAuth.instance.currentUser;
+    //temporary before setting up proper system
+    SignupModel.gtype == 1
+        ? SignupModel.sapproved(true)
+        : SignupModel.sapproved(false);
     FirebaseFirestore.instance.collection("users").doc(user.uid).set(
       {
         'name': SignupModel.gname,
@@ -63,6 +74,7 @@ class SignupController extends ControllerMVC {
         'phone': SignupModel.gphone,
         'cnic': SignupModel.gcnic,
         'type': SignupModel.gtype,
+        'approved': SignupModel.gapproved,
       },
     );
   }

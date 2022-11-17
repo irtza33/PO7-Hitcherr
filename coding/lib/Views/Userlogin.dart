@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:coding/Views/View.dart';
 import 'package:coding/Controllers/UserSigninController.dart';
 import 'package:coding/Views/Landing.dart';
+import 'package:coding/Controllers/LandingController.dart';
+import 'package:coding/Views/ApprovedLanding.dart';
 
 class UserSignin extends StatefulWidget {
   const UserSignin({Key? key}) : super(key: key);
@@ -16,6 +18,7 @@ class _UserSigninState extends State<UserSignin> {
   //const Userlogin({Key? key}) : super(key: key);
 
   final UserSigninController _controller = UserSigninController();
+  final LandingController _controllerL = LandingController();
 
   @override
   Widget build(BuildContext context) {
@@ -109,14 +112,29 @@ class _UserSigninState extends State<UserSignin> {
                               if (UserSigninModel.checkState == 1) {
                                 print("Signed in successfully");
                                 _controller.setFbErr(false, null);
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) => Landing())).onError(
-                                  (error, stackTrace) {
-                                    print("Error ${error.toString()}");
-                                  },
-                                );
+
+                                _controllerL.checkStatus().then((_) {
+                                  if (_controllerL.getApproval()) {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) =>
+                                                ApprovedLanding())).onError(
+                                      (error, stackTrace) {
+                                        print("Error ${error.toString()}");
+                                      },
+                                    );
+                                  } else {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) => Landing())).onError(
+                                      (error, stackTrace) {
+                                        print("Error ${error.toString()}");
+                                      },
+                                    );
+                                  }
+                                });
                               } else {
                                 FirebaseAuth.instance.signOut();
                                 ScaffoldMessenger.of(context).showSnackBar(

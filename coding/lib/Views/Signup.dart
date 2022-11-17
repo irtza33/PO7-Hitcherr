@@ -152,7 +152,7 @@ class _SignupState extends State<Signup> {
                             backgroundColor: Color(0xff7692ff),
                           ),
                           onPressed: () {
-                            _controller.signIn().then(
+                            _controller.signUp().then(
                               (value) {
                                 if (value != null && value.user != null) {
                                   _controller.updateDB(value.user);
