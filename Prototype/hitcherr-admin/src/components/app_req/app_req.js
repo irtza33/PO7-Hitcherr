@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { auth, db } from "../../firebase";
 import {signInWithEmailAndPassword, sendEmailVerification} from 'firebase/auth'
+import './app_req.css'
 import firebase from "firebase";
 import App from "../../App";
 
@@ -43,9 +44,9 @@ const ApproveReq = () =>
                     })
                 }
                 return(
-                    <div>
-                    <li key={item.data().email}>{item.data().name + "," + item.data().cnic}</li>
-                    <button onClick={handleChange}>Approve</button>
+                    <div className="bid-options">
+                    <li key={item.data().email}>{"Name: "+item.data().name + ", CNIC: " + item.data().cnic}</li>
+                    <button onClick={handleChange} className="logbutton">Approve</button>
                     </div>
                 )
             })}

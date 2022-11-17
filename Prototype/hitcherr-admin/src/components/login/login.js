@@ -3,6 +3,7 @@ import { auth, db } from "../../firebase";
 import {signInWithEmailAndPassword, sendEmailVerification} from 'firebase/auth'
 import firebase from "firebase";
 import { BrowserRouter, useNavigation } from "react-router-dom";
+import "./login.css";
 
 const Login =  () => {
     const [email, setEmail] = useState("")
@@ -20,7 +21,23 @@ const Login =  () => {
         firebase.auth().signInWithEmailAndPassword(email, pass)
         .then((userCredential) => {
             // Signed in
-            window.location = 'approve_requests'
+            // window.location = 'approve_requests'
+            db.collection('users').where("email","==",userCredential.user.email).get()
+                .then((res)=>{
+                    let data = res.docs[0].data()
+                    // console.log("here:",data)
+                    if(data.type  != 3)
+                    {
+                        alert("Invalid Credentials for Admin Panel")
+                    }
+                    else
+                    {
+                        window.location='/approve_requests'
+                    }
+                })
+                .catch((err)=>{
+                    console.log(err)
+                })
             // ...
         })
         .catch((error) => {
@@ -43,7 +60,7 @@ const Login =  () => {
                 <input placeholder="Password" type={"password"} onChange = {(event) => setPass(event.target.value)}/>
             </div>
             <div>
-                <button onClick = {submitForm}>Login</button> 
+                <button onClick = {submitForm} className="logbutton">Login</button> 
             </div>
         </div>
     )
