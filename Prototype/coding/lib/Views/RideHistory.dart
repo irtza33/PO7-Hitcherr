@@ -18,12 +18,15 @@ class _RideHistoryState extends State<RideHistory> {
       .snapshots(); //Fetch snapshots from rides collection in firestore
   void initState() {
     super.initState();
+    //if (FirebaseAuth.instance.currentUser != null) {
     _streamRides = FirebaseFirestore.instance.collection('rides').snapshots();
+    //}
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: StreamBuilder<QuerySnapshot>(
         stream:
             _streamRides, //Adding snapshots in stream so that new data is rendered in real time
@@ -49,7 +52,22 @@ class _RideHistoryState extends State<RideHistory> {
                 Container(
                   color: Colors.white, //make the table
                 );
-                return Text(toRet, style: TextStyle(fontSize: 16));
+                return SizedBox(
+                    height: 50,
+                    width: 150,
+                    child: Column(children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 30),
+                        child: Text(
+                          'Fare    Rating',
+                          style: TextStyle(fontSize: 26),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 30),
+                        child: Text(toRet, style: TextStyle(fontSize: 16)),
+                      )
+                    ]));
               },
             );
           }
