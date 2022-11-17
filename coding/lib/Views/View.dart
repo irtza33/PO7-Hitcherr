@@ -15,7 +15,7 @@ class _ViewState extends State<View> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Drivers App"),
+          title: Text("Home Page"),
           centerTitle: true,
         ),
         body: Center(
