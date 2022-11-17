@@ -28,13 +28,6 @@ class RideHistoryController extends ControllerMVC {
     RideHistoryModel.srating(toSet);
   }
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    FirebaseFirestore.instance.collection('rides').snapshots();
-  }
-
   Future renderHistory() async {
     return FirebaseFirestore.instance.collection('rides');
     // try {
