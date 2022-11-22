@@ -3,6 +3,8 @@ import { auth, db } from "../../firebase";
 import {signInWithEmailAndPassword, sendEmailVerification} from 'firebase/auth'
 import firebase from "firebase";
 import { BrowserRouter, useNavigation } from "react-router-dom";
+import styles from './login.module.scss'
+import img from '../../assets/Hitcherr_logo.png'
 
 const Login =  () => {
     const [email, setEmail] = useState("")
@@ -48,18 +50,27 @@ const Login =  () => {
 
 
     return (
-        <div className="App">
-            <h2>Hitcherr Login Page</h2>
-            <div>
-                <label>Email</label>
-                <input placeholder="Email" type={"text"} onChange = {(event=> setEmail(event.target.value))}/>
-            </div>
-            <div>
-                <label>Password</label>
-                <input placeholder="Password" type={"password"} onChange = {(event) => setPass(event.target.value)}/>
-            </div>
-            <div>
-                <button onClick = {submitForm}>Login</button> 
+        <div className='d-flex align-items-center min-vh-100 w-50 mx-auto'>
+            <div className='container rounded-4 bg-dark shadow-lg my-auto d-flex justify-content-evenly'>
+                <div className="d-flex justify-content-center">
+                    <img src={img} alt="logo"  className={styles.logo}/>
+                </div>
+                <div className="my-auto">
+                    <div className="text-center mb-4">
+                        <h2 className={styles.text}>Admin Portal</h2>
+                    </div>
+                    <div className="mb-3">
+                        <label for='email' className='text-light me-4 pe-4'>Email:</label>
+                        <input className={styles.field_input} id='email' placeholder=" Enter Email" type={"text"} onChange = {(event=> setEmail(event.target.value))}/>
+                    </div>
+                    <div className="mb-3">
+                        <label for='password' className='text-light me-3'>Password:</label>
+                        <input className={styles.field_input} id='password' placeholder=" Enter Password" type={"password"} onChange = {(event) => setPass(event.target.value)}/>
+                    </div>
+                    <div className='d-flex justify-content-end'>
+                        <button className="btn btn-light" onClick = {submitForm}>Login</button> 
+                    </div>
+                </div>
             </div>
         </div>
     )
