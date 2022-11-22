@@ -53,15 +53,19 @@ const ApproveReq = () =>
                             })
                         }
                         return(
-                            <div className={"container bg-dark m-3 rounded-4 " + styles.card}>
+                            <div className={"container bg-dark m-3 rounded-4 shadow-lg " + styles.card}>
                                 <div className="container text-light fs-5 d-flex justify-content-evenly">
-                                    <div>
-                                        <h2 className="fs-5">{item.data().name}</h2>
-                                        <h2 className="fs-5">{item.data().email}</h2>
+                                    <div className="mt-4">
+                                        <h2 className={"fs-6 mx-3 " + styles.card_title}>USERNAME:</h2>
+                                        <h2 className="fs-5 mx-3">{item.data().name}</h2>
+                                        <h2 className={"fs-6 mx-3 " + styles.card_title}>EMAIL:</h2>
+                                        <h2 className="fs-5 mx-3">{item.data().email}</h2>
                                     </div>
-                                    <div>
-                                        <h2 className="fs-5">{item.data().phone}</h2>
-                                        <h2 className="fs-5">{item.data().cnic}</h2>
+                                    <div className="mt-4">
+                                        <h2 className={"fs-6 mx-3 " + styles.card_title}>PHONE:</h2>
+                                        <h2 className="fs-5 mx-3">{item.data().phone}</h2>
+                                        <h2 className={"fs-6 mx-3 " + styles.card_title}>CNIC:</h2>
+                                        <h2 className="fs-5 mx-3">{item.data().cnic}</h2>
                                     </div>
                                 </div>
                                 <div className="d-flex justify-content-center mt-4 mb-4">

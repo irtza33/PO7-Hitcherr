@@ -14,5 +14,10 @@ $grey: #323a50;
 }
 
 .card {
-    max-width: 20rem;
+    max-width: 25rem;
+}
+
+.card_title {
+    color: $secondary;
+    text-decoration: underline;
 }
