@@ -107,6 +107,7 @@ class _DriverSigninState extends State<DriverSignin> {
                               _controllerL.checkStatus().then((_) {
                                 //Check if signed in user has an approved account
                                 if (_controllerL.getApproval()) {
+                                  print(_controllerL.getApproval());
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
