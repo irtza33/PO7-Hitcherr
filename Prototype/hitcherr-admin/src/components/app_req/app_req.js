@@ -36,7 +36,7 @@ const ApproveReq = () =>
             <div className={'d-flex align-items-center '}>
                 <img className={styles.logo} src={img} alt="logo" />
                 <div className="container">
-                    <h1 className="text-light text-start m-0">Pending Requests</h1>
+                    <h1 className="text-light text-start m-0 ms-3">Pending Requests</h1>
                 </div>
             </div>
             <div className={"container " + styles.card_container}>
