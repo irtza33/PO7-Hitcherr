@@ -67,71 +67,84 @@ class _RideHistoryState extends State<RideHistory> {
                       snapshot.data; //Extract data from snapshot
                   List<QueryDocumentSnapshot> listQDS = querySnapshot
                       .docs; //Extract docs from query and store in list
+                  var currUser = FirebaseAuth.instance.currentUser;
+                  var curr_email;
+                  if (currUser != null) {
+                    curr_email = currUser.email;
+                  }
+
                   return ListView.builder(
                     itemCount: listQDS.length,
                     itemBuilder: (context, idx) {
                       QueryDocumentSnapshot doc = listQDS[idx];
-                      String fare = doc['fare'];
-                      String rating = doc['rating']; //Extract fare and rating
-                      return Column(children: <Widget>[
-                        // Each ride will be a row
-                        Container(
-                          padding: EdgeInsets.only(top: 12),
-                          height: 50,
-                          decoration: BoxDecoration(
-                            // border and background styling
-                            color: Color.fromRGBO(50, 58, 80, 1),
-                            border: Border(
-                              bottom: BorderSide(
-                                  width: 1.0,
-                                  color: Color.fromRGBO(118, 146, 255, 1)),
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment
-                                .spaceEvenly, // spacing of Fare and Rating
-                            crossAxisAlignment: CrossAxisAlignment
-                                .start, // center the items within the row
-                            children: [
-                              SizedBox(
-                                child: Text(
-                                  'Fare:',
-                                  style: TextStyle(fontSize: 20),
-                                ),
+                      if (doc['email'].contains(curr_email)) {
+                        String fare = doc['fare'];
+                        String rating = doc['rating']; //Extract fare and rating
+                        return Column(children: <Widget>[
+                          // Each ride will be a row
+                          Container(
+                            padding: EdgeInsets.only(top: 12),
+                            height: 50,
+                            decoration: BoxDecoration(
+                              // border and background styling
+                              color: Color.fromRGBO(50, 58, 80, 1),
+                              border: Border(
+                                bottom: BorderSide(
+                                    width: 1.0,
+                                    color: Color.fromRGBO(118, 146, 255, 1)),
                               ),
-                              SizedBox(
-                                child: Padding(
-                                  padding: EdgeInsets.only(top: 4),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment
+                                  .spaceEvenly, // spacing of Fare and Rating
+                              crossAxisAlignment: CrossAxisAlignment
+                                  .start, // center the items within the row
+                              children: [
+                                SizedBox(
                                   child: Text(
-                                    'PKR ' + fare,
-                                    style: TextStyle(fontSize: 16),
+                                    'Fare:',
+                                    style: TextStyle(fontSize: 20),
                                   ),
                                 ),
-                              ),
-                              SizedBox(
-                                child: Text(
-                                  'Rating: ',
-                                  style: TextStyle(fontSize: 20),
+                                SizedBox(
+                                  child: Padding(
+                                    padding: EdgeInsets.only(top: 4),
+                                    child: Text(
+                                      'PKR ' + fare,
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                height: 20,
-                                width:
-                                    60, // max size of 5 stars will be 5*12=60
-                                child: ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: int.parse(rating),
-                                  itemBuilder: (context, index) {
-                                    return Icon(Icons.star,
-                                        size:
-                                            12); // star icons as per the rating data
-                                  },
+                                SizedBox(
+                                  child: Text(
+                                    'Rating: ',
+                                    style: TextStyle(fontSize: 20),
+                                  ),
                                 ),
-                              ),
-                            ],
+                                SizedBox(
+                                  height: 20,
+                                  width:
+                                      60, // max size of 5 stars will be 5*12=60
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: int.parse(rating),
+                                    itemBuilder: (context, index) {
+                                      return Icon(Icons.star,
+                                          size:
+                                              12); // star icons as per the rating data
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ]);
+                        ]);
+                      } else {
+                        return (Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 30),
+                          child: Text("", style: TextStyle(fontSize: 30)),
+                        ));
+                      }
                     },
                   );
                 }
