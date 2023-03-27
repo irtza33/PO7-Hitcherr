@@ -39,7 +39,7 @@ const ApproveReq = () =>
     const logOut = () => {
         firebase.auth().signOut().then(function() {
             console.log("signout successful")
-            window.location = '/'
+            window.location = '/' 
           }).catch(function(error) {
             // An error happened.
           });

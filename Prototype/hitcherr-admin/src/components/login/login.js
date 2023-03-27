@@ -13,6 +13,7 @@ const Login =  () => {
     const [email, setEmail] = useState("")
     const [pass, setPass] = useState("")
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState();
 
     const getUser = ()=>{
         const data = db.collection('users').where("email","==",firebase.auth().currentUser.email)
@@ -34,7 +35,14 @@ const Login =  () => {
                     // console.log("here:",data)
                     if(data.type  != 3)
                     {
-                        alert("Invalid Credentials for Admin Panel")
+                        setIsLoading(false);
+                        setError("Username is invalid")
+
+                        firebase.auth().signOut().then(function() {
+                            console.log("signout successful")
+                          }).catch(function(error) {
+                            // An error happened.
+                          });
                         //auth().signOut();
                     }
                     else
@@ -45,9 +53,17 @@ const Login =  () => {
                     }
                 })
                 .catch((err)=>{
-                    console.log(err)
+                    setIsLoading(false)
+                    //window.location='/'
+                    setError("Username or Password is invalid")
+
                 })
+                
             // ...
+        }).catch((err) => {
+            setIsLoading(false)
+            //window.location='/'
+            setError("Username or Password is invalid")
         })
         .catch((error) => {
             var errorCode = error.code;
@@ -79,13 +95,18 @@ const Login =  () => {
                     <div className="mb-3">
                         <label for='password' className='text-light me-3'>Password:</label>
                         <input className={styles.field_input} id='password' placeholder=" Enter Password" type={"password"} onChange = {(event) => setPass(event.target.value)}/>
+                        {error ? <p style={{color:"red", fontSize:"10px"}} >{error}</p>:null}
+
                     </div>
                     <div className='d-flex justify-content-end'>
                         <button className="btn btn-light" onClick = {submitForm} disabled={isLoading} >Login</button> 
+                        
                     </div>
                 </div>
+                
             </div>
             {isLoading ? <LoadingSpinner /> : renderPage}
+
 
         </div>
     )
