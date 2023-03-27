@@ -8,7 +8,7 @@ import img from '../../assets/Hitcherr_logo.png'
 import styles from './app_req.module.scss'
 import Popup from './popup'
 import './popup.css'
-import DisplayCnic from './render_cnic'
+
 
 
 const ApproveReq = () =>

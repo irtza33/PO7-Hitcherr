@@ -6,6 +6,7 @@ import ApproveReq from './components/app_req/app_req';
 
 function App() {
   return (
+    
     <Routes>
         <Route path = '/' element = {<Login />}></Route>
         <Route path='/approve_requests' element={<ApproveReq />}></Route>

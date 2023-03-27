@@ -5,11 +5,14 @@ import firebase from "firebase";
 import { BrowserRouter, Navigate, useNavigation } from "react-router-dom";
 import styles from './login.module.scss'
 import img from '../../assets/Hitcherr_logo.png'
+import LoadingSpinner from "./LoadingSpinner";
+import "./styles.css";
 
 
 const Login =  () => {
     const [email, setEmail] = useState("")
     const [pass, setPass] = useState("")
+    const [isLoading, setIsLoading] = useState(false);
 
     const getUser = ()=>{
         const data = db.collection('users').where("email","==",firebase.auth().currentUser.email)
@@ -20,6 +23,7 @@ const Login =  () => {
     }
 
     const submitForm = (event)=>{
+        setIsLoading(true);
         firebase.auth().signInWithEmailAndPassword(email, pass)
         .then((userCredential) => {
             // Signed in
@@ -35,7 +39,9 @@ const Login =  () => {
                     }
                     else
                     {
+                        setIsLoading(false)
                         window.location='/approve_requests'
+
                     }
                 })
                 .catch((err)=>{
@@ -48,6 +54,11 @@ const Login =  () => {
             var errorMessage = error.message;
         });
         
+    }
+
+    const renderPage = () => {
+        window.location='/approve_requests'
+
     }
 
 
@@ -70,10 +81,12 @@ const Login =  () => {
                         <input className={styles.field_input} id='password' placeholder=" Enter Password" type={"password"} onChange = {(event) => setPass(event.target.value)}/>
                     </div>
                     <div className='d-flex justify-content-end'>
-                        <button className="btn btn-light" onClick = {submitForm}>Login</button> 
+                        <button className="btn btn-light" onClick = {submitForm} disabled={isLoading} >Login</button> 
                     </div>
                 </div>
             </div>
+            {isLoading ? <LoadingSpinner /> : renderPage}
+
         </div>
     )
 }
