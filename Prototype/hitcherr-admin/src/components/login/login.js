@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { auth, db } from "../../firebase";
 import {signInWithEmailAndPassword, sendEmailVerification} from 'firebase/auth'
 import firebase from "firebase";
-import { BrowserRouter, useNavigation } from "react-router-dom";
+import { BrowserRouter, Navigate, useNavigation } from "react-router-dom";
 import styles from './login.module.scss'
 import img from '../../assets/Hitcherr_logo.png'
+
 
 const Login =  () => {
     const [email, setEmail] = useState("")
@@ -30,6 +31,7 @@ const Login =  () => {
                     if(data.type  != 3)
                     {
                         alert("Invalid Credentials for Admin Panel")
+                        //auth().signOut();
                     }
                     else
                     {

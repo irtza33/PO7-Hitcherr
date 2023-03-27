@@ -1,0 +1,64 @@
+.button {
+    background-color: white;
+    color: black;
+    border: 2px solid #55228f;
+    border: none;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 12px;
+    transition-duration: 0.4s;
+}
+
+.button:hover {
+    background-color: #55228f;
+    color: white;
+  }
+
+.container1 {
+  display: flex;
+  height: 100vh;
+}
+
+.center-col {
+  flex: 1;
+  overflow-y: scroll;
+}
+
+
+  .Lbutton {
+    background-color: white;
+    color: black;
+    border: 25px solid #55228f;
+    border: black;
+    padding: 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 11px;
+    border-radius: 15px;
+    transition-duration: 0.4s;
+}
+
+.Lbutton:hover {
+    background-color: #55228f;
+    color: white;
+  }
+
+
+  .table {
+    border: 2px solid forestgreen;
+    width: 1000px;
+    height: 50px;
+  }
+    
+  .th {
+    border-bottom: 1px solid black;
+    text-align: center;
+  }
+    
+  .td {
+    text-align: center;
+  }
