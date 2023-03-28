@@ -73,7 +73,7 @@ const OnGoing = () =>
                                     <div  className={"center"}>
                                     <div className="mt-4">
                                         <h4 className={"fs-6 mx-3 " + styles.card_title}>Driver's name:</h4>
-                                        <p className="fs-6 mx-3">{item.data().drivername}</p>
+                                        <p className="fs-6 mx-3">{item.data().driver_name}</p>
                                         <h4 className={"fs-6 mx-3 " + styles.card_title}>Client's name:</h4>
                                         <p className="fs-6 mx-3">{item.data().user_name}</p>
                                         

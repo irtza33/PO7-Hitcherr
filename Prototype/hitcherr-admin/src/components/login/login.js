@@ -105,7 +105,7 @@ const Login =  () => {
                 </div>
                 
             </div>
-            <div style={{marginLeft:50}}>
+            <div style={{marginLeft:10}}>
             {isLoading ? <LoadingSpinner /> : renderPage}
             </div>
 

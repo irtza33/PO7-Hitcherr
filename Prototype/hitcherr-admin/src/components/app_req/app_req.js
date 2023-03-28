@@ -72,7 +72,7 @@ const ApproveReq = () =>
                             setPopup.bind(this, true)()
                             console.log(item.id)
                             console.log("Sent to local store")
-                            localStorage.setItem("detail", item.id)
+                            localStorage.setItem("detail", item.data().email)
                         }
 
                         
