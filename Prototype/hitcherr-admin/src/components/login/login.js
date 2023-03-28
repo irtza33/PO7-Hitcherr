@@ -79,7 +79,7 @@ const Login =  () => {
 
 
     return (
-        <div className='d-flex align-items-center min-vh-100 w-50 mx-auto'>
+        <div className='d-flex align-items-center min-vh-100 w-50 mx-auto' >
             <div className='container rounded-4 bg-dark shadow-lg my-auto d-flex justify-content-evenly'>
                 <div className="d-flex justify-content-center">
                     <img src={img} alt="logo"  className={styles.logo}/>
@@ -105,7 +105,9 @@ const Login =  () => {
                 </div>
                 
             </div>
+            <div style={{marginLeft:50}}>
             {isLoading ? <LoadingSpinner /> : renderPage}
+            </div>
 
 
         </div>

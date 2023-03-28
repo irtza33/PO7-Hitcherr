@@ -8,6 +8,8 @@ import img from '../../assets/Hitcherr_logo.png'
 import styles from './app_req.module.scss'
 import Popup from './popup'
 import './popup.css'
+import SideBar from './header';
+import './header.css';
 
 
 
@@ -36,28 +38,21 @@ const ApproveReq = () =>
 
     const [PopupOpen, setPopup] = useState(false);
 
-    const logOut = () => {
-        firebase.auth().signOut().then(function() {
-            console.log("signout successful")
-            window.location = '/' 
-          }).catch(function(error) {
-            // An error happened.
-          });
-    }
 
     return (
         <div>
+            <SideBar/>
            <div className={'d-flex align-items-center '}>
+               <div style={{marginLeft:140}}>
                 <img className={styles.logo} src={img} alt="logo" />
-                <div className="container">
+                </div>
+                <div className="container" style={{marginLeft:0}}>
                     <h1 className="text-light text-start m-0 ms-3">Pending Requests</h1>
                 </div>
-                <div className="Lbutton" style={{cursor:"pointer", width:100}} onClick={logOut}>
-                    Log Out
-                </div>
+                
             </div>
             <div className={"container " + styles.card_container}>
-                <div className="d-flex flex-wrap">  
+                <div className="d-flex flex-wrap" style={{marginRight:60}}>  
                     {users.map((item)=>{
                         function handleChange(e){
                             e.preventDefault()
@@ -73,7 +68,7 @@ const ApproveReq = () =>
                         }
 
                         function viewDetails(e){
-                            e.preventDefault()
+                            //e.preventDefault()
                             setPopup.bind(this, true)()
                             console.log(item.id)
                             console.log("Sent to local store")
@@ -87,9 +82,9 @@ const ApproveReq = () =>
                             <div 
                                 //onClick={setPopup.bind(this,false)}
 
-                                className={"container bg-dark m-3 rounded-4 shadow-lg " + styles.card}>
+                                className={"container bg-dark m-3 rounded-4 shadow-lg " + styles.card} >
 
-                                <div className="container text-light fs-5 d-flex justify-content-evenly">
+                                <div className="container text-light fs-5 d-flex justify-content-evenly" >
                                     <div className="mt-4">
                                         <h2 className={"fs-6 mx-3 " + styles.card_title}>USERNAME:</h2>
                                         <h2 className="fs-5 mx-3">{item.data().name}</h2>

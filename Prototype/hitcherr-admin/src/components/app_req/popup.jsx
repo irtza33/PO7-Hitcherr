@@ -7,7 +7,7 @@ import CarPopup from './car_popup'
 
 
 const Popup = ({setPopup}) => {
-
+    let flag = false;
     const [CnicPopupOpen, setCnicPopup] = useState(false);
     const [CarPopupOpen, setCarPopup] = useState(false);
 
@@ -17,7 +17,7 @@ const Popup = ({setPopup}) => {
     const [drivers, setDrivers] = useState([])
 
     const getDrivers = async ()=>{ //Do processing in popuo not her
-        
+        flag = false;
         const DriverData = db.collection('Drivers')
                     .get()
                     .then((res)=>{
@@ -28,10 +28,14 @@ const Popup = ({setPopup}) => {
                         setDrivers(temp)
                     })
 
+            
 
         drivers.forEach((driver,idx) => {
             if (driver.id == localStorage.getItem("detail")) {
-                //console.log("FOUND")
+                flag = true;
+                console.log(localStorage.getItem("detail"))
+                console.log(driver.id)
+                console.log("FOUND")
                 let driverData = driver.data();
                 let temp = [];
                 let car = [];
@@ -64,6 +68,20 @@ const Popup = ({setPopup}) => {
                 setCnic(temp);
             }
         }) 
+        if (!flag) {
+            localStorage.setItem("back", "")
+            localStorage.setItem("front", "")
+            localStorage.setItem("interior", "")
+            localStorage.setItem("left", "")
+            localStorage.setItem("right", "")
+            localStorage.setItem("name", "")
+            localStorage.setItem("color", "")
+            localStorage.setItem("license", "")
+            localStorage.setItem("manufacturer", "")
+            localStorage.setItem("model", "")
+            localStorage.setItem("cnic1", "")
+            localStorage.setItem("cnic2", "")
+        }
 
 
     }
