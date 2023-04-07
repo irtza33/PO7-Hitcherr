@@ -1,0 +1,31 @@
+.box
+{
+border-radius: 25px;
+ color: black;    
+ height: 50px;
+ width: 350px;
+}
+
+.red
+{
+    background-color:rgb(155, 6, 6); 
+    border-radius: 10px;
+    width: 350px;
+    height : 50px;   
+    text-align: center;
+    margin-left: 12px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.green
+{
+    background-color:rgb(7, 122, 45); 
+    border-radius: 10px;
+    width: 350px;
+    height : 50px;   
+    text-align: center;
+    margin-left: 12px;
+    margin-bottom: 10px;   
+    
+}
